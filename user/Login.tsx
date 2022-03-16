@@ -1,6 +1,13 @@
-import { View, Text, TextInput, Button } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  TouchableHighlight,
+} from 'react-native';
 import styles from '../globalStyles';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import { ReducerState } from '../store/store';
 import { loginChange } from '../store/actions';
 import { auth, app, signInWithEmailAndPassword } from './config';
@@ -11,6 +18,7 @@ function LoginComponent() {
     (state: ReducerState) => state.userReducer.userLogin
   );
   const dispatch = useDispatch();
+  const navigation: any = useNavigation();
   const loginUser = async (newUser: UserInput) => {
     let { email, password } = newUser;
     if (email && password) {
@@ -27,24 +35,77 @@ function LoginComponent() {
   };
   return (
     <View style={styles.container}>
-      <Text> Caliber </Text>
+      <Text style={styles.caliber}> Caliber </Text>
+      <View style={styles.login}>
+        <View style={styles.loginInput}>
+          <TextInput
+            placeholder="Email"
+            onChangeText={(val) => {
+              console.log(newUser);
+              dispatch(loginChange({ ...newUser, email: val }));
+            }}
+            value={newUser.email}
+          />
+        </View>
+
+        <View>
+          <TextInput
+            placeholder="Password"
+            onChangeText={(val) =>
+              dispatch(loginChange({ ...newUser, password: val }))
+            }
+            secureTextEntry
+            value={newUser.password}
+          />
+        </View>
+      </View>
       <View>
-        <TextInput
-          placeholder="Email"
-          onChangeText={(val) => {
-            console.log(newUser);
-            dispatch(loginChange({ ...newUser, email: val }));
+        <TouchableHighlight
+          onPress={() => loginUser(newUser)}
+          style={{
+            backgroundColor: '#F26925',
+            height: 45,
+            width: 200,
+            borderRadius: 40,
+            alignItems: 'center',
+            marginBottom: 40,
           }}
-          value={newUser.email}
-        />
-        <TextInput
-          placeholder="Password"
-          onChangeText={(val) =>
-            dispatch(loginChange({ ...newUser, password: val }))
-          }
-          value={newUser.password}
-        />
-        <Button title="submit" onPress={() => loginUser(newUser)} />
+        >
+          <Text
+            style={{
+              alignItems: 'center',
+              padding: 8,
+              color: '#fff',
+              fontSize: 18,
+              fontWeight: 'bold',
+            }}
+          >
+            Log in {'>'}
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={() => {
+            navigation.navigate('ForgotPassword');
+          }}
+          style={{
+            backgroundColor: '#fff',
+            height: 45,
+            width: 200,
+            borderRadius: 40,
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              alignItems: 'center',
+              color: '#72A4C2',
+              fontSize: 18,
+              fontWeight: 'bold',
+            }}
+          >
+            Forgot password?
+          </Text>
+        </TouchableHighlight>
       </View>
     </View>
   );

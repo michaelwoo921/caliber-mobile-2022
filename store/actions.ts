@@ -1,9 +1,9 @@
 import Batch from '../batches/Batch';
 import QcWeek from '../batchWeek/QcWeek';
-import Category from '../categoriesFeature/Category';
+import Category from '../categories/Category';
 import WeekCategory from '../weekCategories/WeekCategory';
 import { UserInfo, UserInput } from '../user/user';
-import AssociateWithFeedBack from '../associate/Associate';
+import { AssociateWithFeedBack } from '../associate/Associate';
 
 export enum BatchActions {
   GetBatches = 'GET_BATCHES',
@@ -38,6 +38,12 @@ export enum BatchWeekActions {
   NoteChange = 'CHANGE_NOTE',
 }
 
+export enum CategoryActions {
+  GetActive = 'GET_ACTIVE',
+  GetStale = 'GET_STALE',
+  GetRender = 'GET_RENDER',
+}
+
 export interface AppAction {
   type: string;
   payload: any;
@@ -66,6 +72,11 @@ export interface WeekCategoryAction extends AppAction {
 export interface AssociateAction extends AppAction {
   type: AssociateActions;
   payload: AssociateWithFeedBack[];
+}
+
+export interface CategoryAction<P> extends AppAction {
+  type: CategoryActions;
+  payload: P | P[] | boolean;
 }
 
 export function getUser(user: UserInfo): UserAction<UserInfo> {
@@ -160,5 +171,26 @@ export function getAssociates(
   return {
     type: AssociateActions.GetAssociates,
     payload: associates,
+  };
+}
+
+export function getActive(categories: Category[]): CategoryAction<Category[]> {
+  return {
+    type: CategoryActions.GetActive,
+    payload: categories,
+  };
+}
+
+export function getStale(categories: Category[]): CategoryAction<Category[]> {
+  return {
+    type: CategoryActions.GetStale,
+    payload: categories,
+  };
+}
+
+export function getRender(b: boolean): CategoryAction<boolean> {
+  return {
+    type: CategoryActions.GetRender,
+    payload: b,
   };
 }

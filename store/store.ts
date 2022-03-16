@@ -11,10 +11,14 @@ import thunk from 'redux-thunk';
 import Batch from '../batches/Batch';
 import QcWeek from '../batchWeek/QcWeek';
 import WeekCategory from '../weekCategories/WeekCategory';
-import Category from '../categoriesFeature/Category';
-import AssociateWithFeedBack from '../associate/Associate';
+import Category from '../categories/Category';
+import { AssociateWithFeedback } from '../associate/Associate';
 import { UserInfo, UserInput } from '../user/user';
 import userReducer from './userReducer';
+import categoryReducer from './categoryReducer';
+import batchReducer from './batchReducer';
+import weekReducer from './weekReducer';
+import weekCategoryReducer from './weekCategoryReducer';
 
 export interface BatchState {
   batch: Batch;
@@ -32,7 +36,7 @@ export interface UserState {
 }
 
 export interface AssociateState {
-  associates: AssociateWithFeedBack[];
+  associates: AssociateWithFeedback[];
 }
 
 export interface WeekCategoryState {
@@ -60,6 +64,10 @@ export interface CaliberState
 
 const rootReducer = combineReducers({
   userReducer,
+  categoryReducer,
+  batchReducer,
+  weekReducer,
+  weekCategoryReducer,
 });
 export type ReducerState = ReturnType<typeof rootReducer>;
 

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { loginChange } from '../store/actions';
 import { UserInput } from './user';
 import { useNavigation } from '@react-navigation/native';
+import styles from '../globalStyles';
 
 function Logout() {
   const dispatch = useDispatch();
@@ -17,15 +18,16 @@ function Logout() {
       .catch((err) => console.log(err));
   }
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableHighlight
         onPress={() => {
           logout();
           dispatch(loginChange(new UserInput()));
-          navigation.navigate('Login', { Screen: 'Login' });
+          navigation.navigate('Login');
         }}
+        style={styles.logoutBackground}
       >
-        <Text> Log out</Text>
+        <Text style={styles.logoutText}> Log out</Text>
       </TouchableHighlight>
     </View>
   );

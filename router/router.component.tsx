@@ -6,7 +6,7 @@ import { auth } from '../user/config';
 import { getUser } from '../store/actions';
 
 function RouterComponent() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
     auth.onIdTokenChanged(function (user) {
